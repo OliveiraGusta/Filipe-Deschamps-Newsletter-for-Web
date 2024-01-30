@@ -11,6 +11,7 @@ if __name__ == "__main__":
     db_manager = DatabaseManager(**db_config)
 
     try:
+        '''
         # CREATE
         news_hard_values = ["2024-01-29",
                        "Curiosidade para o dia 29 de janeiro: em 1886, o engenheiro alemão Carl Benz dava entrada na patente do veículo movido por motor a gás, considerada hoje como a “certidão de nascimento” do automóvel. E após as notícias de hoje: programa de estágio em uma das poucas empresas no mundo que une tecnologia e saúde, e um depoimento no meu curso de programação para quem estuda em casa ou sozinho e sente que está enrolando/perdendo tempo."]
@@ -28,7 +29,8 @@ if __name__ == "__main__":
 
         # DELETE
         db_manager.delete_news('id = 0')
-        print("\nNotícia excluída  no Banco de Dados:")
+        print("\nNotícia excluída  no Banco de Dados:")'''
+
 
 
     finally:
