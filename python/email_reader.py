@@ -1,5 +1,4 @@
 import imaplib
-import email
 from email import policy
 from email.parser import BytesParser
 
@@ -15,7 +14,7 @@ class EmailReader:
         self.mail.login(self.email_address, self.password)
         self.mail.select('inbox')
 
-    def read_emails(self, num_emails=1):
+    def read_emails(self, num_emails=5):
         status, messages = self.mail.search(None, 'FROM', 'newsletter@filipedeschamps.com.br')
         message_ids = messages[0].split()
 
