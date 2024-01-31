@@ -30,6 +30,16 @@ class DatabaseManager:
         command = f'DELETE FROM news WHERE {delete_condition}'
         self.cursor.execute(command)
 
+    def delete_all_news(self):
+        try:
+            command = f'DELETE FROM news'
+            self.cursor.execute(command)
+            print('BANCO DE DADOS LIMPO')
+        except:
+            print('ERRO')
+
+
+
     def close_connection(self):
         self.cursor.close()
         self.connection.close()
