@@ -2,7 +2,6 @@ from email_reader import EmailReader
 from datetime import datetime
 from database_manager import DatabaseManager
 
-
 class EmailProcessor:
     def __init__(self, email_address, password, server_address):
         self.email_reader = EmailReader(email_address, password, server_address)
@@ -22,15 +21,22 @@ class EmailProcessor:
 
             try:
                 for email_info in last_emails:
+                    email_subject = email_info['subject']
+                    email_date = self.format_email_date(email_info['date'])
+
+                    db_manager.new_subject(email_date,email_subject)
+
                     news_list = self.extract_news(email_info)
                     for date, content in news_list:
-                        db_manager.create_news(date, content)
+                        if not db_manager.news_exists(date, content):
+                            db_manager.create_news(date, content)
 
             finally:
                 db_manager.close_connection()
 
         finally:
             self.email_reader.disconnect()
+
     def format_email_date(self, raw_date):
         date_object = datetime.strptime(raw_date, "%a, %d %b %Y %H:%M:%S %z")
         formatted_date = date_object.strftime("%Y-%m-%d")
@@ -39,6 +45,7 @@ class EmailProcessor:
     def extract_news(self, email_info):
         email_date = self.format_email_date(email_info['date'])
         email_content = email_info['content']
+
         lines = email_content.split('\n')
         filtered_lines = []
 

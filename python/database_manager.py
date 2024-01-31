@@ -34,12 +34,22 @@ class DatabaseManager:
         try:
             command = f'DELETE FROM news'
             self.cursor.execute(command)
-            print('BANCO DE DADOS LIMPO')
+            print('CLEAN DATABASE')
         except:
-            print('ERRO')
+            print('ERROR')
 
+    def news_exists(self, news_date, news_text):
+        command = 'SELECT COUNT(*) FROM news WHERE news_date = %s AND news_text = %s'
+        values = (news_date, news_text)
+        self.cursor.execute(command, values)
+        count = self.cursor.fetchone()[0]
+        return count > 0
 
+    def new_subject(self, subject_date, subject_text ):
+        command = f'INSERT INTO news_subjects(subject_date, subject_text) VALUES (%s, %s)'
+        values = (subject_date, subject_text)
+        self.cursor.execute(command, values)
 
     def close_connection(self):
-        self.cursor.close()
-        self.connection.close()
+                self.cursor.close()
+                self.connection.close()
