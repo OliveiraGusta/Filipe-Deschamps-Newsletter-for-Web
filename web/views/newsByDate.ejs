@@ -1,0 +1,28 @@
+<!-- views/newsByDate.ejs -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Filipe Deschamps Newsletter for Web - News by Date</title>
+</head>
+<body>
+  <% if (data.news.length > 0) { %>
+    <h1><%= data.news[0].news_date %></h1>
+    <% data.news.forEach(newsItem => { %>
+      <div>
+        <% const matchingSubject = data.table2.find(subjectItem => subjectItem.subject_date === newsItem.news_date); %>
+        <% if (matchingSubject) { %>
+          <h3>Assunto: <%= matchingSubject.subject_text %></h3>
+        <% } else { %>
+          <p>Sem assunto relacionado.</p>
+        <% } %>
+        <p><%= newsItem.news_text %></p>
+      </div>
+    <% }); %>
+  <% } else { %>
+    <p>Sem notícias para a data selecionada.</p>
+  <% } %>
+</body>
+</html>

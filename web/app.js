@@ -11,4 +11,5 @@ app.use('/', mainRoutes);
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor iniciado no link http://localhost:${PORT}`);
+  console.log(`Teste de data no link http://localhost:${PORT}/2024/2/2`);
 });
