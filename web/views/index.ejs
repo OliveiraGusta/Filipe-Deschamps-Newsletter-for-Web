@@ -1,5 +1,6 @@
+<!-- views/index.ejs -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,9 +9,17 @@
 </head>
 <body>
   <h1>News</h1>
-  <% data.forEach(item => { %>
-    <h2><%= item.news_date %></h2>
-    <p><%= item.news_text %></p>
+  <% data.table1.forEach(newsItem => { %>
+    <h2><%= newsItem.news_date %></h2>
+    <!-- Verifica se há um assunto para a data da notícia -->
+    <% const matchingSubject = data.table2.find(subjectItem => subjectItem.subject_date === newsItem.news_date); %>
+    <% if (matchingSubject) { %>
+      <h3>Assunto: <%= matchingSubject.subject_text %></h3>
+    <% } %>
+    <p><%= newsItem.news_text %></p>
+
+    
+
   <% }); %>
 </body>
 </html>

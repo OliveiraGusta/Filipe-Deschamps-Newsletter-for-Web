@@ -2,26 +2,44 @@ const db = require('../models/db');
 
 const mainController = {
   getIndex: (req, res) => {
-    db.query('SELECT id, news_text, news_date FROM news', (err, results) => {
-        if (err) {
-        console.error('Erro na consulta:', err);
+
+    db.queryTable1((err, resultsTable1) => {
+      if (err) {
+        console.error('Erro na consulta da tabela1:', err);
         res.status(500).send('Erro interno do servidor');
         return;
       }
 
-      const formattedResults = results.map(item => ({
-        ...item,
-        news_date: formatNewsDate(new Date(item.news_date)),
-      }));
+    db.queryTable2((err, resultsTable2) => {
+      if (err) {
+        console.error('Erro na consulta da tabela2:', err);
+        res.status(500).send('Erro interno do servidor');
+        return;
+      }
 
-      res.render('index', { data: formattedResults });
+      const combinedResults = {
+        table1: formatDates(resultsTable1),
+        table2: formatDates(resultsTable2)
+        
+      };
+    
+        res.render('index', { data: combinedResults });
+      });
     });
   }
 };
 
-function formatNewsDate(date) {
-    const options = {day: 'numeric', month: 'short', year: 'numeric' };
-    return date.toLocaleDateString('en-US', options);
-  }
-  
-  module.exports = mainController;
+function formatDates(data) {
+  return data.map(item => ({
+    ...item,
+    news_date: formatDate(new Date(item.news_date)),
+    subject_date: formatDate(new Date(item.subject_date))
+  }));
+}
+
+function formatDate(date) {
+  const options = { day: 'numeric', month: 'long', year: 'numeric' };
+  return date.toLocaleDateString('pt-BR', options);
+}
+
+module.exports = mainController;
